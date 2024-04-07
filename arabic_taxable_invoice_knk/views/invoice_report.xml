@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="custom_internal_layout" inherit_id="web.internal_layout">
+        <xpath expr="//div[hasclass('header')]" position="replace" />
+    </template>
+    <template id="report_invoice_document">
+        <t t-call="arabic_taxable_invoice_knk.custom_internal_layout">
+            <t t-set="o" t-value="o.with_context(lang=lang)" />
+            <style>
+                @font-face {
+                font-family: 'Tajawal-Black';
+                src: local('Tajawal'), local('Tajawal'), url(/arabic_taxable_invoice_knk/static/src/fonts/Tajawal-Black.ttf)
+                format('opentype');
+                }
+                @font-face {
+                font-family: 'Tajawal-Bold';
+                src: local('Tajawal'), local('Tajawal'), url(/arabic_taxable_invoice_knk/static/src/fonts/Tajawal-Bold.ttf)
+                format('opentype');
+                }
+                @font-face {
+                font-family: 'Tajawal-ExtraBold';
+                src: local('Tajawal'), local('Tajawal'),
+                url(/arabic_taxable_invoice_knk/static/src/fonts/Tajawal-ExtraBold.ttf) format('opentype');
+                }
+                @font-face {
+                font-family: 'ExtraLigh';
+                src: local('Tajawal'), local('Tajawal'),
+                url(/arabic_taxable_invoice_knk/static/src/fonts/Tajawal-ExtraLigh.ttf) format('opentype');
+                }
+                @font-face {
+                font-family: 'Tajawal-Light';
+                src: local('Tajawal'), local('Tajawal'), url(/arabic_taxable_invoice_knk/static/src/fonts/Tajawal-Light.ttf)
+                format('opentype');
+                }
+                @font-face {
+                font-family: 'Tajawal-Medium';
+                src: local('Tajawal'), local('Tajawal'), url(/arabic_taxable_invoice_knk/static/src/fonts/Tajawal-Medium.ttf)
+                format('opentype');
+                }
+                @font-face {
+                font-family: 'Tajawal-Regular';
+                src: local('Tajawal'), local('Tajawal'),
+                url(/arabic_taxable_invoice_knk/static/src/fonts/Tajawal-Regular.ttf) format('opentype');
+                }
+                .regular{
+                font-family: Tajawal-Regular;
+                }
+                .black{
+                font-family: Tajawal-Black !important;
+                /*font-weight: bold;*/
+                }
+                .light{
+                font-family: Tajawal-Light;
+                }
+                .address_block span{
+                line-height: initial !important;
+                }
+                .table-border {
+                    border: 1px solid !important;
+                }
+                table{
+                    margin-bottom: 3px !important;
+                }
+                .product_block td{
+                    border-right: 1px solid;
+                    border-left: 1px solid;
+
+                    border-top: 0px !important;
+                    <!-- padding: 5px 0px 5px 0px !important; -->
+                }
+                .table tr td{
+                        padding: 0.2rem 0.2rem !important;
+                }
+            </style>
+            <div class="page">
+                <div class="header">
+                    <table class="table table-bordered" style="border: 2px solid white;width: 100%;">
+                        <tr style="display: block;margin-left: auto;margin-right: auto;width: 100%;">
+                            <td width="80%" style="border: 1px solid white;">
+                                <center><img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 120px;display: block;margin-left: auto;margin-right: auto;width: 100%;" alt="Logo" /></center>
+                            </td>
+                            
+                        </tr>
+                    </table>
+                    <div class="regular text-center" style="text-align:right;width:100%;">
+                        <t>
+                            <span><u><b>Delivery Note </b></u></span>
+                        </t>
+                    </div>
+                    <style>
+                        .table-border {
+                        border: 1px solid !important;
+                        }
+                        table{
+                        margin-bottom: 3px !important;
+                        }
+                        .product_block td{
+                        border-right: 1px solid;
+
+                        border-top: 0px !important;
+                        
+                        }
+                        .table tr td{
+                            padding: 0.2rem 0.2rem !important;
+                        }
+                        .styled-table {
+                            border-collapse: separate;
+                            border: 2px solid black;
+                            border-radius: 10px;
+                            width: 100%;
+                        }
+
+                        .styled-table td {
+                            padding: 10px;
+                        }
+
+                        .styled-table tr {
+                            border-bottom: 1px solid transparent; /* Transparent line after every row */
+                        }
+
+                        .styled-table tr:last-child {
+                            border-bottom: none; /* Remove line after the last row */
+                        }
+                        hr.solid {
+                            border-top: 3px solid black;
+                        }
+
+                        
+                    </style>
+                    <!-- Table 1 -->
+                    <table class="styled-table">
+                        <tbody style="font-size: 14px;">
+                            <tr>
+                                <td class="text-center" style="border-bottom: 1px solid lightgrey;">SOLD TO</td>
+                                <td colspan="3" class="text-center regular" style="border-bottom: 1px solid lightgrey;">
+                                    <t t-out="o.partner_id.name" />
+                                </td>
+                            </tr>
+                            <!-- <hr class="solid"></hr> -->
+                            <tr>
+                                <td class="text-center" style="border-bottom: 1px solid lightgrey;">DELIVER TO</td>
+                                <td colspan="3" class="text-center regular" style="border-bottom: 1px solid lightgrey;">
+                                    <t t-out="o.partner_id.name" />
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                
+                                <td class="td-1 text-center" width="10%" style="border-bottom: 1px solid lightgrey;">ADDRESS</td>
+                                <td class="td-2 text-center" style="font-size: 12px;border-bottom: 1px solid lightgrey;" width="32%">
+                                    <div><span t-out="docs.get_address(o.company_id, company=True)[:42]" /></div>
+                                </td>
+                                <td class="td-3 text-center" width="10%" style="border-bottom: 1px solid lightgrey;">POST CODE</td>
+                                <td class="td-4 text-center" width="20%" style="border-bottom: 1px solid lightgrey;"><span t-field="o.company_id.zip" /></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center" style="border-bottom: 1px solid lightgrey;">ORDERED BY</td>
+                                <td class="text-center" style="border-bottom: 1px solid lightgrey;"><span t-field="o.partner_id.name" /></td>
+                                <td class="text-center" style="border-bottom: 1px solid lightgrey;">DATE</td>
+                                <td class="text-center" style="border-bottom: 1px solid lightgrey;"><span t-field="o.invoice_date" /></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+
+                    
+                </div>
+                <style>
+                    .table-border {
+                    border: 1px solid !important;
+                    }
+                    table{
+                    margin-bottom: 3px !important;
+                    }
+                    .product_block td{
+                    border-right: 1px solid;
+
+                    border-top: 0px !important;
+                    
+                    }
+                    .table tr td{
+                        padding: 0.2rem 0.2rem !important;
+                    }
+                    .custom-table {
+                        border-collapse: separate;
+                        border: 2px solid black;
+                        border-radius: 10px;
+                        width: 100%;
+                    }
+
+                    .custom-table td {
+                        padding: 10px;
+                    }
+
+                    .custom-table tr {
+                        border-bottom: 1px solid transparent; /* Transparent line after every row */
+                    }
+
+                    .custom-table tr:last-child {
+                        border-bottom: none; /* Remove line after the last row */
+                    }
+                    hr.solid {
+                        border-top: 3px solid black;
+                    }
+                    tr.bottom-line {
+                        border-bottom: 1px solid black;
+                    }
+
+                    
+                </style>
+                <table class="custom-table">
+                    <thead style="font-size:15px;">
+                        
+                        <tr class="bottom-line" style="border-bottom: 5px solid red;">
+                            <td class="text-center" width="2%" style="border-bottom: 1px solid black;">N</td>
+                            <td class="text-center" width="68%" style="border-bottom: 1px solid black;">Item</td>
+                            <td class="text-center" width="6%" style="border-bottom: 1px solid black;">Quantity</td>
+                            <td class="text-center" width="10%" style="border-bottom: 1px solid black;">Unit</td>
+                            <td class="text-center" width="12%" style="border-bottom: 1px solid black;">Reference</td>
+                            
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: 15px;">
+                        <t t-set="line_len" t-value="3" />
+                        <t t-set="len_l" t-value="0" />
+                        <t t-set="inv_l" t-value="0" />
+                        <t t-foreach="o.invoice_line_ids" t-as="l">
+                            <t>
+                                <t t-set="inv_l" t-value="inv_l+1" />
+                            </t>
+                            <t t-set="len_l" t-value="len_l+1" />
+                            
+                            <tr>
+                                <td class="text-center" width="2%" style="border-bottom: 1px solid lightgrey;">
+                                    <div>
+                                        <span t-out="inv_l" />
+                                    </div>
+                                </td>
+                                <td class="text-center" width="68%" style="border-bottom: 1px solid lightgrey;">
+                                    <div>
+                                        <span t-out="l.name[:68]" />
+                                    </div>
+                                </td>
+                                <td class="text-center" width="6%" style="border-bottom: 1px solid lightgrey;">
+                                    <div>
+                                        <span t-out="'{:.2f}'.format(l.quantity)" />
+                                    </div>
+                                </td>
+                                <td class="text-center" width="10%" style="border-bottom: 1px solid lightgrey;">
+                                    <div>
+                                        <span t-out="l.product_uom_id.name" />
+                                    </div>
+                                </td>
+                                <td class="text-center" width="12%" style="border-bottom: 1px solid lightgrey;">
+                                    <div>
+                                        <span t-out="l.quantity and '{:.2f}'.format((l.price_total- l.price_subtotal)/l.quantity) or 0.0" />
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                        </t>
+                        <t t-set="rem_len" t-value="line_len - (len_l % line_len)" />
+                        
+                    </tbody>
+                </table>
+                <div class="regular" style="width:100%;">
+                    <tr>
+                        <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                        <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                    </tr>
+                    <t>
+                        <span><b>Received above goods in good condition. </b></span>
+                    </t>
+                </div>
+                <div class="footer">
+                    <table class="styled-table">
+                        <tbody style="font-size: 14px;">
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">Name:..................................................................<br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">Signature:.................................................................<br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <br />
+                            <tr style="color:red;">
+                                <td class="text-center">          London Heritage Limited</td>
+                                <td colspan="8" class="text-center regular">
+                                    Email: info@noblestone.uk
+                                </td>
+                                <td colspan="6" class="text-center regular">
+                                    Contact: 07554998460
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="report_invoice">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="lang" t-value="o.user_id.sudo().lang if o.move_type in ('in_invoice', 'in_refund') else o.partner_id.lang" />
+                <t t-call="arabic_taxable_invoice_knk.report_invoice_document" t-lang="lang" />
+            </t>
+        </t>
+    </template>
+    <record id="invoice_form_inherit_sale_stock" model="ir.ui.view">
+        <field name="name">account.move.form.sale.stock</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            <field name="invoice_date" position="after">
+                <field name="invoice_date" />
+            </field>
+        </field>
+    </record>
+
+
+
+    <!-- <template id="custom_picking_internal_layout" inherit_id="web.html_container">
+        <xpath expr="//div[hasclass('header')]" position="replace" />
+    </template> -->
+    <template id="report_picking_document">
+        <!-- <t t-call="arabic_taxable_invoice_knk.custom_picking_internal_layout"> -->
+            <t t-set="o" t-value="o.with_context(lang=lang)" />
+            <style>
+                @font-face {
+                font-family: 'Tajawal-Black';
+                src: local('Tajawal'), local('Tajawal'), url(/arabic_taxable_invoice_knk/static/src/fonts/Tajawal-Black.ttf)
+                format('opentype');
+                }
+                @font-face {
+                font-family: 'Tajawal-Bold';
+                src: local('Tajawal'), local('Tajawal'), url(/arabic_taxable_invoice_knk/static/src/fonts/Tajawal-Bold.ttf)
+                format('opentype');
+                }
+                @font-face {
+                font-family: 'Tajawal-ExtraBold';
+                src: local('Tajawal'), local('Tajawal'),
+                url(/arabic_taxable_invoice_knk/static/src/fonts/Tajawal-ExtraBold.ttf) format('opentype');
+                }
+                @font-face {
+                font-family: 'ExtraLigh';
+                src: local('Tajawal'), local('Tajawal'),
+                url(/arabic_taxable_invoice_knk/static/src/fonts/Tajawal-ExtraLigh.ttf) format('opentype');
+                }
+                @font-face {
+                font-family: 'Tajawal-Light';
+                src: local('Tajawal'), local('Tajawal'), url(/arabic_taxable_invoice_knk/static/src/fonts/Tajawal-Light.ttf)
+                format('opentype');
+                }
+                @font-face {
+                font-family: 'Tajawal-Medium';
+                src: local('Tajawal'), local('Tajawal'), url(/arabic_taxable_invoice_knk/static/src/fonts/Tajawal-Medium.ttf)
+                format('opentype');
+                }
+                @font-face {
+                font-family: 'Tajawal-Regular';
+                src: local('Tajawal'), local('Tajawal'),
+                url(/arabic_taxable_invoice_knk/static/src/fonts/Tajawal-Regular.ttf) format('opentype');
+                }
+                .regular{
+                font-family: Tajawal-Regular;
+                }
+                .black{
+                font-family: Tajawal-Black !important;
+                /*font-weight: bold;*/
+                }
+                .light{
+                font-family: Tajawal-Light;
+                }
+                .address_block span{
+                line-height: initial !important;
+                }
+                .table-border {
+                    border: 1px solid !important;
+                }
+                table{
+                    margin-bottom: 3px !important;
+                }
+                .product_block td{
+                    border-right: 1px solid;
+                    border-left: 1px solid;
+
+                    border-top: 0px !important;
+                    <!-- padding: 5px 0px 5px 0px !important; -->
+                }
+                .table tr td{
+                        padding: 0.2rem 0.2rem !important;
+                }
+            </style>
+            <div class="page">
+                <div class="header">
+                    <!-- <table class="table table-bordered" style="border: 2px solid white; width: 100%; text-align: center;">
+                        <tr style="display: block; margin-left: auto; margin-right: auto; width: 100%; text-align: center;">
+                            <td width="80%" style="border: 1px solid white; text-align: center;"> -->
+                                <center>
+                                    <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="display: inline-block;" alt="Logo" />
+                                </center>
+                            <!-- </td>
+                        </tr>
+                    </table> -->
+                    <div class="regular text-center" style="text-align:right;width:100%;">
+                        <t>
+                            <span><u><b>Delivery Note </b></u></span>
+                        </t>
+                    </div>
+                    <style>
+                        .table-border {
+                        border: 1px solid !important;
+                        }
+                        table{
+                        margin-bottom: 3px !important;
+                        }
+                        .product_block td{
+                        border-right: 1px solid;
+
+                        border-top: 0px !important;
+                        
+                        }
+                        .table tr td{
+                            padding: 0.2rem 0.2rem !important;
+                        }
+                        .styled-table {
+                            border-collapse: separate;
+                            border: 2px solid black;
+                            border-radius: 10px;
+                            width: 100%;
+                        }
+
+                        .styled-table td {
+                            padding: 10px;
+                        }
+
+                        .styled-table tr {
+                            border-bottom: 1px solid transparent; /* Transparent line after every row */
+                        }
+
+                        .styled-table tr:last-child {
+                            border-bottom: none; /* Remove line after the last row */
+                        }
+                        hr.solid {
+                            border-top: 3px solid black;
+                        }
+
+                        
+                    </style>
+                    <!-- Table 1 -->
+                    <table class="styled-table">
+                        <tbody style="font-size: 14px;">
+                            <tr>
+                                <td class="text-center" style="border-bottom: 1px solid lightgrey;">SOLD TO</td>
+                                <td colspan="3" class="text-center regular" style="border-bottom: 1px solid lightgrey;">
+                                    <t t-out="o.partner_id.name" />
+                                </td>
+                            </tr>
+                            <!-- <hr class="solid"></hr> -->
+                            <tr>
+                                <td class="text-center" style="border-bottom: 1px solid lightgrey;">DELIVER TO</td>
+                                <td colspan="3" class="text-center regular" style="border-bottom: 1px solid lightgrey;">
+                                    <t t-out="o.partner_id.name" />
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                
+                                <td class="td-1 text-center" width="10%" style="border-bottom: 1px solid lightgrey;">ADDRESS</td>
+                                <td class="td-2 text-center" style="font-size: 12px;border-bottom: 1px solid lightgrey;" width="32%">
+                                    <div><span t-out="o.company_id.street[:42]" /></div>
+                                </td>
+                                <td class="td-3 text-center" width="10%" style="border-bottom: 1px solid lightgrey;">POST CODE</td>
+                                <td class="td-4 text-center" width="20%" style="border-bottom: 1px solid lightgrey;"><span t-field="o.company_id.zip" /></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center" style="border-bottom: 1px solid lightgrey;">ORDERED BY</td>
+                                <td class="text-center" style="border-bottom: 1px solid lightgrey;"><span t-field="o.partner_id.name" /></td>
+                                <td class="text-center" style="border-bottom: 1px solid lightgrey;">DATE</td>
+                                <td class="text-center" style="border-bottom: 1px solid lightgrey;"><span t-field="o.date_done" /></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+
+                    
+                </div>
+                <style>
+                    .table-border {
+                    border: 1px solid !important;
+                    }
+                    table{
+                    margin-bottom: 3px !important;
+                    }
+                    .product_block td{
+                    border-right: 1px solid;
+
+                    border-top: 0px !important;
+                    
+                    }
+                    .table tr td{
+                        padding: 0.2rem 0.2rem !important;
+                    }
+                    .custom-table {
+                        border-collapse: separate;
+                        border: 2px solid black;
+                        border-radius: 10px;
+                        width: 100%;
+                    }
+
+                    .custom-table td {
+                        padding: 10px;
+                    }
+
+                    .custom-table tr {
+                        border-bottom: 1px solid transparent; /* Transparent line after every row */
+                    }
+
+                    .custom-table tr:last-child {
+                        border-bottom: none; /* Remove line after the last row */
+                    }
+                    hr.solid {
+                        border-top: 3px solid black;
+                    }
+                    tr.bottom-line {
+                        border-bottom: 1px solid black;
+                    }
+
+                    
+                </style>
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                <table class="custom-table">
+                    <thead style="font-size:15px;">
+                        
+                        <tr class="bottom-line" style="border-bottom: 5px solid red;">
+                            <td class="text-center" width="2%" style="border-bottom: 1px solid black;">N</td>
+                            <td class="text-center" width="68%" style="border-bottom: 1px solid black;text-align:center;">Item</td>
+                            <td class="text-center" width="6%" style="border-bottom: 1px solid black;">Quantity</td>
+                            <td class="text-center" width="10%" style="border-bottom: 1px solid black;">Unit</td>
+                            <td class="text-center" width="12%" style="border-bottom: 1px solid black;">Reference</td>
+                            
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: 15px;">
+                        <t t-set="line_len" t-value="8" />
+                        <t t-set="len_l" t-value="0" />
+                        <t t-set="inv_l" t-value="0" />
+                        <t t-set="lines" t-value="o.move_ids.filtered(lambda x: x.product_uom_qty)"/>
+                        <t t-foreach="lines" t-as="l">
+                            <t>
+                                <t t-set="inv_l" t-value="inv_l+1" />
+                            </t>
+                            <t t-set="len_l" t-value="len_l+1" />
+                            
+                            <tr>
+                                <td class="text-center" width="2%" style="border-bottom: 1px solid lightgrey;">
+                                    <div>
+                                        <span t-out="inv_l">)</span>
+                                    </div>
+                                </td>
+                                <td class="text-center" width="68%" style="border-bottom: 1px solid lightgrey;text-align:center;">
+                                    <div>
+                                        <span t-out="l.product_id.name[:68]" />
+                                    </div>
+                                </td>
+                                <td class="text-center" width="6%" style="border-bottom: 1px solid lightgrey;">
+                                    <div>
+                                        <span t-out="'{:.2f}'.format(l.product_uom_qty)" />
+                                    </div>
+                                </td>
+                                <td class="text-center" width="10%" style="border-bottom: 1px solid lightgrey;">
+                                    <div>
+                                        <span t-out="l.product_uom.name" />
+                                    </div>
+                                </td>
+                                <td class="text-center" width="12%" style="border-bottom: 1px solid lightgrey;">
+                                    <div>
+                                        <span t-out="l.quantity_done" />
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                        </t>
+                        <t t-set="rem_len" t-value="line_len - (len_l % line_len)" />
+                        
+                    </tbody>
+                </table>
+                <div class="regular" style="width:100%;">
+                    <tr>
+                        <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                        <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                    </tr>
+                    <t>
+                        <span><b>Received above goods in good condition. </b></span>
+                    </t>
+                </div>
+                <div class="footer">
+                    <table class="styled-table">
+                        <tbody style="font-size: 14px;">
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">Name:..................................................................<br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">Signature:.................................................................<br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                                <td colspan="6" class="text-center regular" style="font-weight: bold;">                          <br /></td>
+                            </tr>
+                            <br />
+                            <tr style="color:red;">
+                                <td class="text-center">          London Heritage Limited</td>
+                                <td colspan="8" class="text-center regular">
+                                    Email: info@noblestone.uk
+                                </td>
+                                <td colspan="6" class="text-center regular">
+                                    Contact: 07554998460
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+        <!-- </t> -->
+    </template>
+    <template id="report_picking">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <!-- <t t-set="lang" t-value="o.user_id.sudo().lang if o.move_type in ('in_invoice', 'in_refund') else o.partner_id.lang" /> -->
+<!--                <t t-call="arabic_taxable_invoice_knk.report_picking_document" t-lang="o._get_report_lang()" />-->
+                <t t-call="arabic_taxable_invoice_knk.report_picking_document" />
+            </t>
+        </t>
+    </template>
+</odoo>
