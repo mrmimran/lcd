@@ -1,0 +1,53 @@
+<odoo>
+    <data>
+        <!-- Invoice Form View Extension -->
+        <record id="invoice_form_view_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <!-- Add the fields from the sale order -->
+                <!--                <xpath expr="//form/sheet/notebook/page/field[@name='amount_total']" position="after">-->
+                <!--                <xpath expr="//group[@class='oe_invoice_lines_tab']/group[@colspan='4']/group[@class='oe_subtotal_footer']" position="after">-->
+                <xpath expr="//group[hasclass('oe_invoice_lines_tab')]/group[@colspan='4']/group[hasclass('oe_subtotal_footer')]/field[@name='amount_residual']"
+                       position="after">
+                    <!--                        <field name="sale_order_id" invisible="1"/>-->
+                    <field name="total_amount" string="Total Amount"/>
+                    <field name="total_discount" string="Total Discount"/>
+                    <field name="gross_amount" string="Gross Amount"/>
+                    <field name="amount_tax" string="VAT/Tax"/>
+                    <field name="vat_tax" invisible="1"/>
+                    <field name="after_tax_amount" string="After Tax Amount"/>
+                    <field name="delivery_charges" string="Delivery Charges"/>
+                    <field name="other_charges" string="Other Charges"/>
+                    <field name="net_amount" string="Net Amount"/>
+                </xpath>
+
+                <xpath expr="//group[hasclass('oe_invoice_lines_tab')]/group[@colspan='4']/group[hasclass('oe_subtotal_footer')]//field[@name='tax_totals']"
+                       position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='name']" position="after">
+                    <field name="product_qty_available" string="QoH" optional="show" force_save="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='quantity']" position="after">
+                    <field name="product_sqm" string="SQM" optional="show" force_save="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='quantity']" position="before">
+                    <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_uom_id']" position="move"/>
+                </xpath>
+
+                 <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="attributes">
+                    <attribute name="string">Unit Price</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="after">
+                    <field name="payment_type" string="Tr. Type" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Define views for ColorColor -->
+    <record id="view_color_color_form" model="ir.ui.view">
+        <field name="name">color.color.form</field>
+        <field name="model">color.color</field>
+        <field name="arch" type="xml">
+            <form string="Color">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Define views for SizeSize -->
+    <record id="view_size_size_form" model="ir.ui.view">
+        <field name="name">size.size.form</field>
+        <field name="model">size.size</field>
+        <field name="arch" type="xml">
+            <form string="Size">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Define views for OriginOrigin -->
+    <record id="view_origin_origin_form" model="ir.ui.view">
+        <field name="name">origin.origin.form</field>
+        <field name="model">origin.origin</field>
+        <field name="arch" type="xml">
+            <form string="Origin">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+     <!-- Define views for Thickness -->
+    <record id="view_thickness_form" model="ir.ui.view">
+        <field name="name">thickness.thickness.form</field>
+        <field name="model">thickness.thickness</field>
+        <field name="arch" type="xml">
+            <form string="thickness">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Define views for Group -->
+    <record id="view_thickness_form" model="ir.ui.view">
+        <field name="name">group.group.form</field>
+        <field name="model">group.group</field>
+        <field name="arch" type="xml">
+            <form string="thickness">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+  <!-- Define actions for each model -->
+    <record id="action_group" model="ir.actions.act_window">
+        <field name="name">Group</field>
+        <field name="res_model">group.group</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Define actions for each model -->
+    <record id="action_color_color" model="ir.actions.act_window">
+        <field name="name">Colors</field>
+        <field name="res_model">color.color</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_size_size" model="ir.actions.act_window">
+        <field name="name">Sizes</field>
+        <field name="res_model">size.size</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_origin_origin" model="ir.actions.act_window">
+        <field name="name">Origin</field>
+        <field name="res_model">origin.origin</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+     <record id="action_thickness" model="ir.actions.act_window">
+        <field name="name">Thickness</field>
+        <field name="res_model">thickness.thickness</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- Define menu items for Color, Size, and Origin under Inventory menu -->
+    <menuitem id="menu_color" name="Colors" parent="stock.menu_warehouse_config" sequence="10" action="action_color_color"/>
+    <menuitem id="menu_size" name="Sizes" parent="stock.menu_warehouse_config" sequence="20" action="action_size_size"/>
+    <menuitem id="menu_origin" name="Origin" parent="stock.menu_warehouse_config" sequence="30" action="action_origin_origin"/>
+    <menuitem id="menu_thickness" name="Thickness" parent="stock.menu_warehouse_config" sequence="40" action="action_thickness"/>
+    <menuitem id="menu_group" name="Group" parent="stock.menu_warehouse_config" sequence="50" action="action_group"/>
+</odoo>

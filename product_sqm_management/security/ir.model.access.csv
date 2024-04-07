@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_color_color,color.color,model_color_color,base.group_user,1,1,1,1
+access_size_size,size.size,model_size_size,base.group_user,1,1,1,1
+access_origin_origin,origin.origin,model_origin_origin,base.group_user,1,1,1,1
+access_group_group,group.group,model_group_group,base.group_user,1,1,1,1
+access_thickness_thickness,thickness.thickness,model_thickness_thickness,base.group_user,1,1,1,1
